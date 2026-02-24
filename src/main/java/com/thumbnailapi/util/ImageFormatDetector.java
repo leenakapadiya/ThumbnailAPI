@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.thumbnailapi.exception.InvalidImageException;
+import com.thumbnailapi.util.Constants;
 import org.springframework.stereotype.Component;
 
 /**
@@ -68,6 +70,12 @@ public class ImageFormatDetector {
             BufferedImage image = ImageIO.read(bais);
             if (image == null) {
                 throw new IOException("Unable to read image");
+            }
+            long pixelArea = (long) image.getWidth() * image.getHeight();
+            if (pixelArea > Constants.MAX_IMAGE_PIXEL_AREA) {
+                throw new InvalidImageException(
+                    String.format("Image pixel area %d exceeds maximum allowed %d (decompression bomb protection)",
+                        pixelArea, Constants.MAX_IMAGE_PIXEL_AREA));
             }
             return new ImageDimensions(image.getWidth(), image.getHeight());
         }

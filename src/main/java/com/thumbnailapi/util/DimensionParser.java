@@ -42,7 +42,14 @@ public class DimensionParser {
         Set<Dimension> uniqueDimensions = new LinkedHashSet<>();
 
         String[] sizes = sizesParam.split(",");
-        
+
+        if (sizes.length > Constants.MAX_THUMBNAIL_SIZES) {
+            throw new InvalidDimensionsException(
+                String.format("Too many thumbnail sizes requested: %d. Maximum allowed: %d",
+                    sizes.length, Constants.MAX_THUMBNAIL_SIZES)
+            );
+        }
+
         for (String size : sizes) {
             String trimmedSize = size.trim();
             Dimension dimension = parseSingleDimension(trimmedSize);

@@ -37,6 +37,12 @@ public final class Constants {
     public static final int MIN_DIMENSION = 16;
     public static final int MAX_DIMENSION = 2000;
 
+    // Thumbnail request limits (DoS protection)
+    public static final int MAX_THUMBNAIL_SIZES = 10;
+
+    // Image pixel-area limit to guard against decompression bombs (~4000x4000 pixels)
+    public static final long MAX_IMAGE_PIXEL_AREA = 16_000_000L;
+
     // API endpoints
     public static final String API_VERSION = "v1";
     public static final String BASE_API_PATH = "/api/" + API_VERSION;

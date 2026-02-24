@@ -15,6 +15,7 @@ import com.thumbnailapi.model.ThumbnailResponse;
 import com.thumbnailapi.util.DimensionParser;
 import com.thumbnailapi.util.ImageFormatDetector;
 import com.thumbnailapi.util.ImageValidator;
+import com.thumbnailapi.util.LogUtil;
 
 /**
  * Main service for processing image upload and thumbnail generation requests.
@@ -52,7 +53,7 @@ public class ImageProcessor {
     public ThumbnailResponse processImage(MultipartFile file, String sizesParam) {
         long startTime = System.currentTimeMillis();
         
-        logger.info("Processing image upload: {} ({})", file.getOriginalFilename(), file.getSize());
+        logger.info("Processing image upload: {} ({})", LogUtil.sanitizeForLog(file.getOriginalFilename()), file.getSize());
 
         // Validate
         imageValidator.validate(file);
@@ -71,11 +72,11 @@ public class ImageProcessor {
             logger.debug("Original image dimensions: {}x{}", dimensions.width(), dimensions.height());
             
             // Parse target dimensions
-            List<Dimension> targetDimensions = (List<Dimension>) dimensionParser.parseDimensions(sizesParam);
+            List<Dimension> targetDimensions = dimensionParser.parseDimensions(sizesParam);
             logger.debug("Generated {} thumbnail sizes", targetDimensions.size());
             
             // Generate thumbnails
-            List<ThumbnailMetadata> thumbnails = (List<ThumbnailMetadata>) thumbnailGenerator.generateThumbnails(
+            List<ThumbnailMetadata> thumbnails = thumbnailGenerator.generateThumbnails(
                 imageBytes,
                 format,
                 targetDimensions
@@ -95,7 +96,7 @@ public class ImageProcessor {
                 .build();
 
         } catch (IOException e) {
-            logger.error("Failed to process image: {}", file.getOriginalFilename(), e);
+            logger.error("Failed to process image: {}", LogUtil.sanitizeForLog(file.getOriginalFilename()), e);
             throw new InvalidImageException("Failed to process image: " + e.getMessage(), e);
         }
     }

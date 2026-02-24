@@ -37,6 +37,25 @@ logs/
 .env.local
 application-local.properties
 
+# Private keys, certificates, and secrets – NEVER commit these
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.ppk
+*.pub
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+id_ecdsa
+id_ecdsa.*
+id_dsa
+id_dsa.*
+*.crt
+*.cer
+
 # Build artifacts
 *.class
 *.jar
