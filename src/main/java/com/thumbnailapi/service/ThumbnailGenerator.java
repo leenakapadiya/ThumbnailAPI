@@ -60,7 +60,7 @@ public class ThumbnailGenerator {
                 
                 long processingTime = System.currentTimeMillis() - startTime;
                 
-                String sizeName = sizeNameMapping.get(dimension.getWidth() + "x" + dimension.getHeight());
+                String sizeName = sizeNameMapping.get(dimension.width + "x" + dimension.height);
                 
                 ThumbnailMetadata metadata = ThumbnailMetadata.create(
                     sizeName,

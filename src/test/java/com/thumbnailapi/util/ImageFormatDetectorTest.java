@@ -28,7 +28,7 @@ class ImageFormatDetectorTest {
 
     @Test
     void testDetectPngFormat() {
-        byte[] pngSignature = new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47};
+        byte[] pngSignature = new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
         
         String format = formatDetector.detectFormat(pngSignature);
         
@@ -37,7 +37,7 @@ class ImageFormatDetectorTest {
 
     @Test
     void testDetectGifFormat() {
-        byte[] gifSignature = new byte[]{0x47, 0x49, 0x46};
+        byte[] gifSignature = new byte[]{0x47, 0x49, 0x46, 0x38, 0x39, 0x61};
         
         String format = formatDetector.detectFormat(gifSignature);
         
