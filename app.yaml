@@ -6,7 +6,6 @@ services:
     deploy_on_push: true
     repo: leenapagdar/ThumbnailAPI
   build_command: mvn clean package -DskipTests
-  source_dir: .
   envs:
   - key: SPRING_PROFILES_ACTIVE
     value: prod
@@ -15,9 +14,4 @@ services:
   http_port: 8080
   instance_count: 1
   instance_size_slug: basic-xs
-  log_destinations:
-  - name: stdout
-    source: STDOUT
-  - name: stderr
-    source: STDERR
 static_sites: []
