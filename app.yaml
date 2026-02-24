@@ -4,7 +4,7 @@ services:
   github:
     branch: main
     deploy_on_push: true
-    repo: YOUR_GITHUB_USERNAME/image-thumbnail-api
+    repo: leenapagdar/ThumbnailAPI
   build_command: mvn clean package -DskipTests
   source_dir: .
   envs:
@@ -13,16 +13,8 @@ services:
   - key: JAVA_TOOL_OPTIONS
     value: -Xmx512m -Xms256m
   http_port: 8080
-  http_routes:
-  - path: /
-    preserve_path_prefix: true
   instance_count: 1
   instance_size_slug: basic-xs
-  resource_limits:
-    cpus: 250m
-    memory_mb: 512
-  health_check:
-    http_path: /api/v1/thumbnails/health
   log_destinations:
   - name: stdout
     source: STDOUT
