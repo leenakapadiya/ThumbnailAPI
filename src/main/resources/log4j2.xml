@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration packages="org.apache.logging.log4j.core">
+    <Properties>
+        <Property name="log.dir">logs</Property>
+        <Property name="log.pattern">%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</Property>
+        <Property name="log.file.pattern">%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${log.pattern}" />
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY" />
+        </Console>
+
+        <!-- File Appender (Rolling) -->
+        <RollingFile name="RollingFile">
+            <FileName>${log.dir}/application.log</FileName>
+            <FilePattern>${log.dir}/application-%d{yyyy-MM-dd}.%i.log</FilePattern>
+            <PatternLayout pattern="${log.file.pattern}" />
+            <Policies>
+                <!-- Roll over daily -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <!-- Roll over at 100MB -->
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY" />
+        </RollingFile>
+
+        <!-- Error File Appender -->
+        <RollingFile name="ErrorFile">
+            <FileName>${log.dir}/error.log</FileName>
+            <FilePattern>${log.dir}/error-%d{yyyy-MM-dd}.%i.log</FilePattern>
+            <PatternLayout pattern="${log.file.pattern}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="100MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY" />
+        </RollingFile>
+
+        <!-- Async Appender for Performance -->
+        <Async name="AsyncConsole" blocking="false" blockingQueue="ArrayBlockingQueue" blockingQueueSize="1024">
+            <AppenderRef ref="Console" />
+        </Async>
+
+        <Async name="AsyncFile" blocking="false" blockingQueue="ArrayBlockingQueue" blockingQueueSize="1024">
+            <AppenderRef ref="RollingFile" />
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <!-- Application Loggers -->
+        <Logger name="com.thumbnailapi" level="DEBUG" additivity="false">
+            <AppenderRef ref="AsyncConsole" level="INFO" />
+            <AppenderRef ref="AsyncFile" level="DEBUG" />
+            <AppenderRef ref="ErrorFile" level="ERROR" />
+        </Logger>
+
+        <!-- Spring Framework Loggers -->
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="AsyncConsole" level="WARN" />
+            <AppenderRef ref="AsyncFile" level="INFO" />
+        </Logger>
+
+        <!-- Root Logger -->
+        <Root level="INFO" additivity="false">
+            <AppenderRef ref="AsyncConsole" level="INFO" />
+            <AppenderRef ref="AsyncFile" level="DEBUG" />
+            <AppenderRef ref="ErrorFile" level="ERROR" />
+        </Root>
+    </Loggers>
+
+</Configuration>

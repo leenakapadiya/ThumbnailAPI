@@ -1,0 +1,16 @@
+target/
+.git/
+.gitignore
+.env
+README.md
+ARCHITECTURE.md
+DEPLOYMENT.md
+.github/
+logs/
+.idea/
+.vscode/
+*.log
+*.swp
+*.swo
+*~
+.DS_Store

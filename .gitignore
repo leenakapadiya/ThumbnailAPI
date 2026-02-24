@@ -1,0 +1,45 @@
+# Maven
+target/
+.m2/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+.flattened-pom.xml
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.settings/
+.classpath
+.c9/
+*.form
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Logs
+logs/
+*.log
+
+# Application
+.env
+.env.local
+application-local.properties
+
+# Build artifacts
+*.class
+*.jar
+!.mvn/wrapper/maven-wrapper.jar
+*.war
+*.nar
