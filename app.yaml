@@ -4,7 +4,7 @@ services:
   github:
     branch: main
     deploy_on_push: true
-    repo: leenapagdar/ThumbnailAPI
+    repo: leenakapadiya/ThumbnailAPI
   build_command: mvn clean package -DskipTests
   envs:
   - key: SPRING_PROFILES_ACTIVE
