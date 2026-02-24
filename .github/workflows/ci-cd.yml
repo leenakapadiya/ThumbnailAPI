@@ -94,7 +94,7 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Deploy to DigitalOcean App Platform
-      uses: digitalocean/app_spec@v1.1.0
+      uses: digitalocean/app_action@v1.1.0
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         app_spec_location: './app.yaml'
