@@ -1,17 +1,26 @@
 name: thumbnail-api
+region: nyc
 services:
-- name: thumbnail-api
-  github:
-    branch: main
-    deploy_on_push: true
-    repo: leenakapadiya/ThumbnailAPI
-  build_command: mvn clean package -DskipTests
-  envs:
-  - key: SPRING_PROFILES_ACTIVE
-    value: prod
-  - key: JAVA_TOOL_OPTIONS
-    value: -Xmx512m -Xms256m
-  http_port: 8080
-  instance_count: 1
-  instance_size_slug: basic-xs
-static_sites: []
+  - name: thumbnail-api
+    build_command: mvn clean package -DskipTests
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xs
+    github:
+      repo: leenakapadiya/ThumbnailAPI
+      branch: main
+      deploy_on_push: true
+    envs:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+        scope: RUN_AND_BUILD_TIME
+      - key: JAVA_TOOL_OPTIONS
+        value: '-Xmx512m -Xms256m'
+        scope: RUN_AND_BUILD_TIME
+ingress:
+  rules:
+    - match:
+        path:
+          prefix: /
+      component:
+        name: thumbnail-api
