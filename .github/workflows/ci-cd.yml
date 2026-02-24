@@ -93,10 +93,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Deploy to DigitalOcean App Platform
-      uses: digitalocean/app_action@v1.1.0
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-        app_spec_location: './app.yaml'
-      continue-on-error: true
+
+    - name: Deploy to DigitalOcean App Platform
+      run: doctl apps update ${{ secrets.DIGITALOCEAN_APP_ID }} --spec ./app.yaml
       # Note: First deployment requires manual DO setup. See DEPLOYMENT.md
