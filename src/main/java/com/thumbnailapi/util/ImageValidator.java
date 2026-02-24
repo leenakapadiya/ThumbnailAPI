@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.thumbnailapi.exception.FileSizeLimitExceededException;
 import com.thumbnailapi.exception.InvalidImageException;
 import com.thumbnailapi.exception.UnsupportedFormatException;
+import com.thumbnailapi.util.LogUtil;
 
 /**
  * Validator for image files.
@@ -34,7 +35,7 @@ public class ImageValidator {
         validateFileSize(file);
         validateMimeType(file);
         validateFileContent(file);
-        logger.debug("Image validation passed for file: {}", file.getOriginalFilename());
+        logger.debug("Image validation passed for file: {}", LogUtil.sanitizeForLog(file.getOriginalFilename()));
     }
 
     /**

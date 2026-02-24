@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.thumbnailapi.model.ThumbnailResponse;
 import com.thumbnailapi.service.ImageProcessor;
 import com.thumbnailapi.util.Constants;
+import com.thumbnailapi.util.LogUtil;
 
 /**
  * REST controller for thumbnail generation API.
@@ -24,7 +24,6 @@ import com.thumbnailapi.util.Constants;
  */
 @RestController
 @RequestMapping(Constants.BASE_API_PATH + "/thumbnails")
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class ThumbnailController {
 
     private static final Logger logger = LogManager.getLogger(ThumbnailController.class);
@@ -76,7 +75,7 @@ public class ThumbnailController {
             @RequestParam(value = "sizes", required = false) String sizes) {
 
         logger.info("Received thumbnail generation request for file: {} with sizes: {}",
-            file.getOriginalFilename(), sizes != null ? sizes : "default");
+            LogUtil.sanitizeForLog(file.getOriginalFilename()), sizes != null ? sizes : "default");
 
         // Process image and generate thumbnails
         ThumbnailResponse response = imageProcessor.processImage(file, sizes);
