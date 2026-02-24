@@ -28,6 +28,10 @@ public record ThumbnailResponse(
     @JsonProperty("thumbnails")
     List<ThumbnailMetadata> thumbnails
 ) {
+    public ThumbnailResponse {
+        thumbnails = thumbnails == null ? List.of() : List.copyOf(thumbnails);
+    }
+
     /**
      * Creates a new ThumbnailResponse builder.
      *
@@ -70,7 +74,7 @@ public record ThumbnailResponse(
         }
 
         public Builder thumbnails(List<ThumbnailMetadata> thumbnails) {
-            this.thumbnails = thumbnails;
+            this.thumbnails = thumbnails == null ? List.of() : List.copyOf(thumbnails);
             return this;
         }
 
